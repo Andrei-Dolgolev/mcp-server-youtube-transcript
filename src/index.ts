@@ -43,17 +43,6 @@ interface TranscriptLine {
   dur: number;
 }
 
-
-export async function getTranscript(url: string): Promise<string> {
-  try {
-    const transcript = await getSubtitles({ videoID, lang });
-    return transcript.map((entry: { text: string }) => entry.text).join(' ');
-  } catch (err: any) {
-    throw new Error(`Transcript fetch failed: ${err.message}`);
-  }
-}
-
-
 class YouTubeTranscriptExtractor {
   /**
    * Extracts YouTube video ID from various URL formats or direct ID input
