@@ -46,7 +46,7 @@ interface TranscriptLine {
 
 export async function getTranscript(url: string): Promise<string> {
   try {
-    const transcript = await YouTubeTranscript.fetchTranscript(url);
+    const transcript = await getSubtitles({ videoID, lang });
     return transcript.map((entry: { text: string }) => entry.text).join(' ');
   } catch (err: any) {
     throw new Error(`Transcript fetch failed: ${err.message}`);
