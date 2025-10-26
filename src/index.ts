@@ -2,7 +2,7 @@
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { getVideoDetails } from 'youtube-caption-extractor';
+import { getSubtitles } from 'youtube-caption-extractor';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
