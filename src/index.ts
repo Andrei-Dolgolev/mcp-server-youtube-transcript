@@ -39,10 +39,9 @@ const TOOLS: Tool[] = [
 
 interface TranscriptLine {
   text: string;
-  start: number;
-  dur: number;
+  start: string;
+  dur: string;
 }
-
 class YouTubeTranscriptExtractor {
   /**
    * Extracts YouTube video ID from various URL formats or direct ID input
