@@ -110,7 +110,7 @@ class YouTubeTranscriptExtractor {
   /**
    * Formats transcript lines into readable text
    */
-  private formatTranscript(transcript: TranscriptLine[]): string {
+  private formatTranscript(transcript: any[]): string {
     return transcript
       .map(line => line.text.trim())
       .filter(text => text.length > 0)
