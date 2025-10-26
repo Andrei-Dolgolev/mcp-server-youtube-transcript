@@ -42,6 +42,17 @@ interface TranscriptLine {
   dur: number;
 }
 
+
+export async function getTranscript(url: string): Promise<string> {
+  try {
+    const transcript = await YouTubeTranscript.fetchTranscript(url);
+    return transcript.map((entry: { text: string }) => entry.text).join(' ');
+  } catch (err: any) {
+    throw new Error(`Transcript fetch failed: ${err.message}`);
+  }
+}
+
+
 class YouTubeTranscriptExtractor {
   /**
    * Extracts YouTube video ID from various URL formats or direct ID input
@@ -89,22 +100,22 @@ class YouTubeTranscriptExtractor {
   /**
    * Retrieves transcript for a given video ID and language
    */
-  async getTranscript(videoId: string, lang: string): Promise<string> {
-    try {
-      const transcript = await getSubtitles({
-        videoID: videoId,
-        lang: lang,
-      });
+  // async getTranscript(videoId: string, lang: string): Promise<string> {
+  //   try {
+  //     const transcript = await getSubtitles({
+  //       videoID: videoId,
+  //       lang: lang,
+  //     });
 
-      return this.formatTranscript(transcript);
-    } catch (error) {
-      console.error('Failed to fetch transcript:', error);
-      throw new McpError(
-        ErrorCode.InternalError,
-        `Failed to retrieve transcript: ${(error as Error).message}`
-      );
-    }
-  }
+  //     return this.formatTranscript(transcript);
+  //   } catch (error) {
+  //     console.error('Failed to fetch transcript:', error);
+  //     throw new McpError(
+  //       ErrorCode.InternalError,
+  //       `Failed to retrieve transcript: ${(error as Error).message}`
+  //     );
+  //   }
+  // }
 
   /**
    * Formats transcript lines into readable text
@@ -185,11 +196,7 @@ class TranscriptServer {
         }
         
         try {
-          const videoId = this.extractor.extractYoutubeId(input);
-          console.error(`Processing transcript for video: ${videoId}`);
-          
-          const transcript = await this.extractor.getTranscript(videoId, lang);
-          console.error(`Successfully extracted transcript (${transcript.length} chars)`);
+          const transcript = await getTranscript(url);
           
           return {
             toolResult: {
